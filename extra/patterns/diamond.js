@@ -1,0 +1,34 @@
+function diamond(n){
+    if(n<2 || n>10)
+     return "please enter value between 2 to 10";
+    let space = n - 1;
+    for(let i = 0; i < n; i++)
+    {
+        let p=''
+        for( let j = 0; j < space; j++)
+         //console.log(" ");
+         p+=" ";
+        for(let k=0;k <= i; k++)
+        // console.log("*");
+        p+="*"+" ";
+        //console.log("\n");
+        console.log(p);
+        space--;
+    }
+    space = 0;
+     for(let l =  n; l > 0; l--)
+     {
+         let p=''
+         for(let m = 0; m < space; m++)
+          //console.log(" ");
+         p+=" ";
+         for( let n = 0; n < l; n++)
+           //console.log("*");
+            p+="*"+" ";
+         //console.log("\n");
+         console.log(p);
+         space++;
+     }
+}
+let t=Number(process.argv[2])
+diamond(t);
