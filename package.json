@@ -1,0 +1,22 @@
+{
+  "name": "javascript-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "diamond":"node extra/patterns/diamond.js",
+    "equilateral": "node extra/patterns/equilateral.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chandramfp/javascript-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chandramfp/javascript-server/issues"
+  },
+  "homepage": "https://github.com/chandramfp/javascript-server#readme"
+}
