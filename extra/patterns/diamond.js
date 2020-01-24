@@ -7,13 +7,13 @@ function diamond(n){
 
     for(let i = 0; i < n; i++)
     {
-        let p = '';
+        let p = "";
 
         for( let j = 0; j < space; j++)
-            p+=" ";
+            p +=" ";
 
         for(let k = 0;k <= i; k++)
-            p += "*" + " ";
+            p += "* ";
         
         console.log(p);
         space--;
@@ -23,13 +23,13 @@ function diamond(n){
 
     for(let l =  n; l > 0; l--)
     {
-        let p = '';
+        let p = "";
 
         for(let m = 0; m < space; m++)
            p += " ";
 
         for( let n = 0; n < l; n++)
-           p += "*" + " ";
+           p += "* ";
          
         console.log(p);
         space++;
