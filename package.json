@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "diamond":"node extra/patterns/diamond.js",
-    "equilateral": "node extra/patterns/equilateral.js"
+    "diamond": "node extra/patterns/diamond.js",
+    "equilateral": "node extra/patterns/equilateral.js",
+    "validation": "node extra/utils/validation.js",
+    "permission": "node extra/utils/permissions.js"
 
   },
   "repository": {
