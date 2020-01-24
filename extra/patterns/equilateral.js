@@ -6,13 +6,13 @@ function equilateral(n)
      
     for(let i = 1; i <= n; i++)
     {
-        let p = '';
+        let p = "";
 
         for(let j = i; j <= n; j++)
           p += " ";
 
         for( let k = 1;k <= i; k++)
-          p += "*" + " ";
+          p += "* ";
 
         console.log(p);
     }
