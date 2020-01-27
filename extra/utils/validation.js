@@ -1,8 +1,8 @@
 let validUserCount = 0;    //for number of  valid user 
 let invalidUserCount = 0;  //for number of invalid user
 
-let validUser = [];    
-let invalidUser = [];
+let isValidUser = [];    
+let isInvalidUser = [];
 
 let users = [ {
 
@@ -38,9 +38,9 @@ function validateEmail(email) {
     temp = re.test(email);
 
     if(temp == true)
-    validUser.push(email);
+    isValidUser.push(email);
     else
-    invalidUser.push(email);
+    isInvalidUser.push(email);
 
     return temp;
 
@@ -76,8 +76,8 @@ validateUsers(users);
 console.log("validUserCount: " + validUserCount);
 console.log("invalidUserCount: " + invalidUserCount);
 
-console.log("validUser: " + validUser);
-console.log("invalidUser: " + invalidUser);
+console.log("validUser: " + isValidUser);
+console.log("invalidUser: " + isInvalidUser);
 
 
 
