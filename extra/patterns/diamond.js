@@ -1,4 +1,5 @@
-function diamond(n){
+let n;
+export default function diamond(n){
 
     if(n < 2 || n > 10)
      return "please enter value between 2 to 10";
@@ -36,5 +37,3 @@ function diamond(n){
     }
 }
 
-let t = Number(process.argv[2])
-diamond(t);

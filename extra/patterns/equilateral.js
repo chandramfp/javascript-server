@@ -1,4 +1,5 @@
-function equilateral(n)
+let n;
+export default function equilateral(n)
 {
     
     if(n < 2 || n > 10)
@@ -18,7 +19,3 @@ function equilateral(n)
     }
 }
 
-let t = Number(process.argv[2]);
-
-equilateral(t);
-//console.log(process.argv);

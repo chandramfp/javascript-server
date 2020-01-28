@@ -1,16 +1,8 @@
 
-const permissions =
-{
-    'getUsers': {
-        all: ['head-trainer'],
-        read : ['trainee', 'trainer'],
-        write : ['trainer'],
-        delete: [],
-    }
+import { permissions } from "../constants";
 
-};
 
-function hasPermission(moduleName, role, permissionType)
+export default function hasPermission(moduleName, role, permissionType)
 {
     let data = permissions[moduleName];
     let temp = data[permissionType];
@@ -20,6 +12,7 @@ function hasPermission(moduleName, role, permissionType)
     return false 
    } );
 }
-//console.log(hasPermission("getUsers","tra","read"));
-let result = (hasPermission("getUsers","trainer","read"));
-console.log(result)
+
+
+
+

@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "diamond":"node extra/patterns/diamond.js",
+
+    "diamond": "node extra/patterns/diamond.js",
     "equilateral": "node extra/patterns/equilateral.js",
     "validation": "node extra/utils/validation.js",
-    "permissions": "node extra/utils/permissions.js",
-    "1": "node Desktop/1.js"
+    "permission": "node extra/utils/permissions.js",
+    "build": "npx babel-node extra"
 
   },
   "repository": {
@@ -21,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/chandramfp/javascript-server/issues"
   },
-  "homepage": "https://github.com/chandramfp/javascript-server#readme"
+  "homepage": "https://github.com/chandramfp/javascript-server#readme",
+  
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/preset-env": "^7.8.3"
+  }
 }

@@ -4,50 +4,9 @@ let invalidUserCount = 0;  //for number of invalid user
 let isValidUser = [];    
 let isInvalidUser = [];
 
-let users = [ {
+import  { validateEmail } from "./helpers";
 
-    traineeEmail: 'trainee1@suessive.tech',
-    reviewerEmail: 'reviewer1@successive.tech',
-
-    },
-    {
-
-        traineeEmail: 'trainee1@successive.tech',
-        reviewerEmail: 'reviewer1@successive.tech',
-    
-    },
-    {
-
-        traineeEmail: 'trainee1@successive.tech',
-        reviewerEmail: 'reviewer1@successive.tech',
-        
-    },
-    {
-
-        traineeEmail: 'trainecessive.tech',
-        reviewerEmail: 'reviewccessive.tech',
-        
-    },
-];
-
-
-
-function validateEmail(email) {
-
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((successive.tech))$/;
-    temp = re.test(email);
-
-    if(temp == true)
-    isValidUser.push(email);
-    else
-    isInvalidUser.push(email);
-
-    return temp;
-
-}
-
-
-function validateUsers(users){
+export default function validateUsers(users){
     
    users.forEach(element => {
 
@@ -55,31 +14,36 @@ function validateUsers(users){
 
        let check = validateEmail(traineeEmail);
 
-       if(check == true)
+       if(check == true){
+       isInvalidUser.push(traineeEmail);
        validUserCount++;
-       else
+       }
+       else{
        invalidUserCount++;
-
+       isInvalidUser.push(traineeEmail);
+       }
        let check1 = validateEmail(reviewerEmail);
 
-       if(check1 == true)
-       validUserCount++;
-       else
-       invalidUserCount++;
+       if(check1 == true){
+        validUserCount++;
+        isValidUser.push(reviewerEmail);
+
+       }
+       
+       else{
+        invalidUserCount++;
+        isInvalidUser.push(reviewerEmail);
+
+       }
+       
 
    });
 
+
+    console.log("validUserCount: " + validUserCount);
+    console.log("invalidUserCount: " + invalidUserCount);
+
+    console.log("validUser: " + isValidUser);
+    console.log("invalidUser: " + isInvalidUser);
 }
-
-validateUsers(users);
-
-console.log("validUserCount: " + validUserCount);
-console.log("invalidUserCount: " + invalidUserCount);
-
-console.log("validUser: " + isValidUser);
-console.log("invalidUser: " + isInvalidUser);
-
-
-
-
 
