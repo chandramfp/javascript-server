@@ -8,8 +8,8 @@
     "diamond": "node extra/patterns/diamond.js",
     "equilateral": "node extra/patterns/equilateral.js",
     "validation": "node extra/utils/validation.js",
-    "permission": "node extra/utils/permissions.js"
-
+    "permission": "node extra/utils/permissions.js",
+    "build": "npx babel-node extra"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/chandramfp/javascript-server/issues"
   },
-  "homepage": "https://github.com/chandramfp/javascript-server#readme"
+  "homepage": "https://github.com/chandramfp/javascript-server#readme",
+  
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/preset-env": "^7.8.3"
+  }
 }
