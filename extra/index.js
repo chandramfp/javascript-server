@@ -4,8 +4,10 @@ import { haspermission, validateUsers } from "./utils";
 import { users } from "./constants"
 
 
-diamond(Number(process.argv[2]));
-equilateral(Number(process.argv[3]));
+//diamond(Number(process.argv[2]));
+//equilateral(Number(process.argv[3]));
+diamond(5);
+equilateral(5);
 
 let temp = haspermission("getUsers","trainer","read");
 console.log(temp);
