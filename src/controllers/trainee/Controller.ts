@@ -22,7 +22,7 @@ class Controller {
         });
     }
 
-    list = (req: Request, res: Response) => {
+    get = (req: Request, res: Response) => {
         console.log('::::::: INSIDE TRAINEE LIST :::::::');
         res.send({
             status: 'Ok',
