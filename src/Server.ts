@@ -1,18 +1,41 @@
+
 import * as express from 'express';
 import IConfig from './config/IConfig';
+import * as bodyParser from 'body-parser';
+import errorHandler from './libs/routes/errorHandler';
+import notFoundRoutes from './libs/routes/notFoundRoute';
+import { Request } from 'express';
+
+
+interface IUser {
+    id: string;
+    name: string;
+}
+interface NewRequest extends Request {
+    user: IUser;
+}
 
 class Server {
 
     private app: express.Express;
 
-    constructor(private config:IConfig) {
+    constructor(private config: IConfig) {
         this.app = express();
         return this;
     }
     bootstrap = () => {
         console.log('Inside bootsrap');
+        this.initBodyParser();
         this.setupRoutes();
         return this;
+    }
+    initBodyParser = () => {
+        const { app } = this;
+        console.log('Inside Bodyparser');
+        app.use(bodyParser.urlencoded({ extended: false }));
+
+        // parse application/json
+        app.use(bodyParser.json());
     }
     run = () => {
         const { app, config: { port } } = this;
@@ -32,8 +55,21 @@ class Server {
             res.send('i am ok');
         });
 
+        app.use('/api', (req: NewRequest, res, next) => {
+            console.log('Inside Middleware ');
+            req.user = {
+                id: '101',
+                name: 'Alex'
+            };
+            console.log(req.user);
+            res.send('Ok');
+        });
+
         console.log('hi');
+        app.use(notFoundRoutes);
+        app.use(errorHandler);
         return this;
     }
+
 }
 export default Server;
