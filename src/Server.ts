@@ -5,6 +5,8 @@ import * as bodyParser from 'body-parser';
 import errorHandler from './libs/routes/errorHandler';
 import notFoundRoutes from './libs/routes/notFoundRoute';
 import { Request } from 'express';
+import mainRouter from './router';
+
 
 
 interface IUser {
@@ -55,7 +57,7 @@ class Server {
             res.send('i am ok');
         });
 
-        app.use('/api', (req: NewRequest, res, next) => {
+        app.use('/Middleware', (req: NewRequest, res, next) => {
             console.log('Inside Middleware ');
             req.user = {
                 id: '101',
@@ -65,7 +67,8 @@ class Server {
             res.send('Ok');
         });
 
-        console.log('hi');
+        // console.log('hi');
+        app.use('/api', mainRouter);
         app.use(notFoundRoutes);
         app.use(errorHandler);
         return this;
