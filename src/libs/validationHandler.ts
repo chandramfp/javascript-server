@@ -83,7 +83,10 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
                 }
     }
   });
-   res.send(errorMsg)
-   console.log('errors', errorMsg );
-   next();
+  if(errorMsg.length >0) {
+      res.send(errorMsg)
+      } else {
+          next();
+      }
+  
 };
