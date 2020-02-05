@@ -18,7 +18,7 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
             if (Object.keys(validationRuleserror).includes('errorMessage')) {
                 errorMsg.push(validationRuleserror.errorMessage);
             }
-            else if ( Object.values(validationRuleserror).includes('custom')) {
+            else if ( Object.keys(validationRuleserror).includes('custom')) {
                 errorMsg.push(validationRuleserror.custom(validateKeyerror));
             }
             else {
@@ -41,7 +41,7 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
                     }
                 if (requireFlag === true) {
                     if (Object.keys(validationRules).includes('string')) {
-                        if (validationRules.string && typeof dataToValidate[validateKey] === 'string' ) {//
+                        if ( typeof dataToValidate[validateKey] === 'string' ) {//
                         }
                         else {
                             errorchecker (validationRules, validateKey );
