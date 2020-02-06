@@ -67,7 +67,6 @@ class Server {
             res.send('Ok');
         });
 
-        // console.log('hi');
         app.use('/api', mainRouter);
         app.use(notFoundRoutes);
         app.use(errorHandler);
