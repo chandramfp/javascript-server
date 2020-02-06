@@ -6,6 +6,7 @@ import errorHandler from './libs/routes/errorHandler';
 import notFoundRoutes from './libs/routes/notFoundRoute';
 import { Request } from 'express';
 import mainRouter from './router';
+import Database from './libs/Database'
 
 
 
@@ -40,14 +41,22 @@ class Server {
         app.use(bodyParser.json());
     }
     run = () => {
-        const { app, config: { port } } = this;
+        const { app, config: { port, mongoURL } } = this;
 
-        this.app.listen(this.config.port, (err) => {
-            if (err) {
-                throw err;
-            }
-            console.log('App is running successfully on port ' + port);
-        });
+
+        Database.open(mongoURL).then(()=>{
+            this.app.listen(this.config.port, (err) => {
+                if (err) {
+                    console.log('error');
+                    throw err;
+                }
+                console.log('App is running successfully on port ' + port);
+            });
+
+        })
+
+      
+        
     }
     setupRoutes = () => {
         const { app } = this;

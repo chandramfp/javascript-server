@@ -5,7 +5,7 @@ import validationHandler from '../../libs/routes/validationHandler';
 import validation from './validation';
 
 const traineeRouter = Router();
-console.log('---------Test');
+//console.log('---------Test');
 traineeRouter.route('/trainee')
 .get(authmiddleware('getUsers','read'),validationHandler(validation.get),Controller.get)
 .post(authmiddleware('getUsers','write'),validationHandler(validation.create),Controller.create)
