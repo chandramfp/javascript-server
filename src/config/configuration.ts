@@ -5,6 +5,7 @@ config();
 
 const configuration: IConfig = {
     port: process.env.PORT,
-    env: process.env.NODE_ENV
+    env: process.env.NODE_ENV,
+    key: process.env.key
 };
 export default configuration;
