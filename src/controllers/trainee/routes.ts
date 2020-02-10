@@ -11,6 +11,7 @@ traineeRouter.route('/trainee')
 .post(authmiddleware('getUsers','write'),validationHandler(validation.create),Controller.create)
 .put(authmiddleware('getUsers','read'),validationHandler(validation.update),Controller.update)
 .delete(authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete);
+traineeRouter.delete('/trainee/:id',authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete)
 
 
 export default traineeRouter;
