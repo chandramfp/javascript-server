@@ -5,6 +5,7 @@ interface IUserCreate {
     email: string,
     //dob: string,
     mobileNumber: Number,
+    role: String,
     hobbies: string[]
 }
 

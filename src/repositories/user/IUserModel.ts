@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 interface IUserModel extends mongoose.Document{
-    _id: string,
+    id: string,
     name: string,
     address: string,
     email: string,

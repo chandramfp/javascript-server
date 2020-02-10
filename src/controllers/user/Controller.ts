@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import UserRepository from './../../repositories/user/UserRepository';
 import SystemResponse from '../../libs/systemResponse';
+import IRequest from '../../libs/routes/IRequest';
 
 
 class UserController {
@@ -17,14 +18,16 @@ class UserController {
         return UserController.instance;
     };
 
+    
+
     create = (req: Request, res: Response) => {
         try {
             console.log(" :::::::::: Inside Create Trainee :::::::: ");
 
-            const { email, name, address, hobbies, dob, mobileNumber } = req.body;
+            const { email, name,role, address, hobbies, dob, mobileNumber } = req.body;
 
             this.userRepository
-                .create({ email, name, address, hobbies, mobileNumber })
+                .create({ email, name, address,role, hobbies, mobileNumber })
                 .then(user => {
                     return SystemResponse.success(res, user, "trainee added successfully");
                 })

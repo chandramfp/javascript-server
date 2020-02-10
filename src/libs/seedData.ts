@@ -11,7 +11,8 @@ export default () => {
         // dob: new Date('27-12-1993').toDateString(),
         email: 'vinay@nodeexpert.com',
         mobileNumber: 9876543210,
-        hobbies: ['Reading']
+        hobbies: ['Reading'],
+        role: "head-trainee"
     };
     userRepository.count().then((count) => {
         console.log('Number of User', count);

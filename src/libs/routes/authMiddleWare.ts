@@ -2,9 +2,13 @@ import * as jwt from 'jsonwebtoken';
 import configuration, { default as config } from '../../config/configuration';
 import hasPermission from '../permissions';
 import { Request, Response, NextFunction } from 'express';
-//import { config } from 'dotenv/types';
+import IRequest from './IRequest';
+import UserRepository from  '../../repositories/user/UserRepository';
 
-export default (moduleName: any, permissionType: any) => (req: Request, res: Response, next: NextFunction) => {
+const userRepository = new UserRepository();
+
+
+export default (moduleName: any, permissionType: any) => (req: IRequest, res: Response, next: NextFunction) => {
     console.log('------------AUTHMIDDLEWARE------------', moduleName, permissionType);
     try {
 
@@ -21,15 +25,32 @@ export default (moduleName: any, permissionType: any) => (req: Request, res: Res
                 message: 'Unauthorized Access'
             });
         }
-        const role: string = decodedUser.role;
-        if (!hasPermission(moduleName, role, permissionType)) {
-            return next({
-                staus: 403,
-                error: 'Unauthorized Access',
-                message: 'Unauthorized Access'
-            });
-        }
-        next();
+
+        const { id, email } = decodedUser;
+
+        userRepository.findOne({ _id: id, email }).then(user => {
+            if (!user) {
+                next({
+                    status: 403,
+                    error: "Unauthorized Access",
+                    message: "User does not Exist in the System",
+                })
+            }
+            req.user = user
+        }).then (() =>{
+            const role: string = decodedUser.role;
+
+            if (!hasPermission(moduleName, role, permissionType)) {
+                return next({
+                    staus: 403,
+                    error: 'Unauthorized Access',
+                    message: 'Unauthorized Access'
+                });
+            }
+            next();
+            
+        })
+       
     }
     catch (error) {
         return next({
