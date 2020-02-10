@@ -9,14 +9,14 @@ const userRouter = Router();
 
 userRouter.route('/user')
 
-// .get(authmiddleware('getUsers','read'),validationHandler(validation.get),Controller.get)
-// .post(authmiddleware('getUsers','read'),Controller.create)
-// .put(authmiddleware('getUsers','read'),validationHandler(validation.update),Controller.update)
-// .delete(authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete);
-.get(Controller.get)
- .post(Controller.create)
- .put(Controller.update)
- .delete(Controller.delete);
-userRouter.delete('/user/:id',Controller.delete)
+.get(authmiddleware('getUsers','read'),validationHandler(validation.get),Controller.get)
+.post(authmiddleware('getUsers','read'),Controller.create)
+.put(authmiddleware('getUsers','read'),validationHandler(validation.update),Controller.update)
+.delete(authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete);
+// .get(Controller.get)
+//  .post(Controller.create)
+//  .put(Controller.update)
+//  .delete(Controller.delete);
+userRouter.delete('/user/:id',authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete)
 
 export default userRouter;

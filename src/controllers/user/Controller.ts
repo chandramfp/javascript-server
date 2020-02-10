@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import  UserRepository from './../../repositories/user/UserRepository';
+import UserRepository from './../../repositories/user/UserRepository';
 import SystemResponse from '../../libs/systemResponse';
 
 
@@ -24,7 +24,7 @@ class UserController {
             const { email, name, address, hobbies, dob, mobileNumber } = req.body;
 
             this.userRepository
-                .create({ email, name, address, hobbies,  mobileNumber })
+                .create({ email, name, address, hobbies, mobileNumber })
                 .then(user => {
                     return SystemResponse.success(res, user, "trainee added successfully");
                 })
@@ -41,34 +41,30 @@ class UserController {
                 console.log(user);
                 return SystemResponse.success(res, user, "Users List");
             }).catch(error => {
-                    throw error;
-                });
+                throw error;
+            });
         } catch (err) { }
     };
     update = (req: Request, res: Response) => {
-        try{
-            console.log(" :::::::::: Inside Update Trainee :::::::: ");
-
-            const data = req.body;
-            this.userRepository.update(data.id,data).then(user => {
-                console.log(user);
-                return SystemResponse.success(res, user, "Updated successfully")
+        try {
+            console.log(' :::::::::: Inside Update Trainee :::::::: ');
+            const { id, dataToUpdate } = req.body;
+            
+            this.userRepository.update({ _id: id }, dataToUpdate).then(user => {
+                this.userRepository.findOne({ _id: id }).then(user => {
+                    return SystemResponse.success(res, user, 'Updated successfully');
+                }).catch(error => {
+                    throw error
+                })
+                
+            }).catch(error => {
+                throw error
             })
-            .catch(error => {
-                throw error;
-            });
+        }
+        catch (err) {
 
-        }catch (err){ }
-        // console.log(" :::::::::: Inside Update Trainee :::::::: ");
-        // res.send({
-        //     status: "OK",
-        //     message: "Trainee updated successfully",
-        //     data: {
-        //         id: 1001,
-        //         name: "Chandrashekhar Kumar",
-        //         address: "Delhi"
-        //     }
-        // });
+        }
+        
     };
     delete = (req: Request, res: Response) => {
         try {
@@ -78,21 +74,13 @@ class UserController {
                 console.log(user);
                 return SystemResponse.success(res, user, "user deleted successfully")
             })
-            .catch(error => {
-                throw error;
-            });
+                .catch(error => {
+                    throw error;
+                });
 
-        }catch (err) { }
-        // console.log(" :::::::::: Inside Delete Trainee :::::::: ");
-        // res.send({
-        //     status: "OK",
-        //     message: "Trainee deleted successfully",
-        //     data: {
-        //         id: 1001,
-        //         name: "Chandrashekhar Kumar",
-        //         address: "Delhi"
-        //     }
-        // });
+        } catch (err) { }
+        
+       
     };
 }
 

@@ -73,8 +73,8 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
 
     validationKeys.forEach(validateKey => {
         const validationRules = config[validateKey];
-        
-        
+
+
         if (Object.keys(validationRules).includes('in')) {
 
             if (validationRules.in.includes('body') && Object.keys(dataFromBody).includes(validateKey)) {
@@ -92,8 +92,8 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
 
 
         }
-        
-        
+
+
 
 
 

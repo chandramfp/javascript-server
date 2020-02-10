@@ -6,6 +6,7 @@ const permissions: Ipermission = {
         write: ['trainer'],
         delete: [],
     }
+    
 };
 const users: Iusers[] = [{
     traineeEmail: 'trainee1@suessive.tech',

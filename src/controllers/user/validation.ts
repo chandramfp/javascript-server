@@ -5,7 +5,7 @@ const validation = {
             regex: /^[a-zA-Z ]{2,30}$/,
             in: ['body'],
             errorMessage: 'Name is required'
-            
+
         },
         address: {
             required: false,
@@ -21,7 +21,7 @@ const validation = {
             errorMessage: 'email is required'
 
         },
-        
+
         mobile: {
             required: false,
             number: true,
@@ -58,7 +58,7 @@ const validation = {
             number: true,
             in: ['query'],
             errorMessage: 'Skip is invalid',
-            
+
         },
         limit: {
             required: false,
@@ -66,7 +66,7 @@ const validation = {
             number: true,
             in: ['query'],
             errorMessage: 'Limit is invalid',
-            
+
         }
     },
     update: {
@@ -74,7 +74,7 @@ const validation = {
             required: true,
             string: true,
             in: ['body'],
-            
+
 
         },
         dataToUpdate: {
