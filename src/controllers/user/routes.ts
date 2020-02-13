@@ -19,7 +19,7 @@ userRouter.route('/')
 //  .post(Controller.create)
 //  .put(Controller.update)
 //  .delete(Controller.delete);
-userRouter.delete('/user/:id',authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete)
+userRouter.delete('/:id',authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete)
 
 userRouter.route('/me')
 .get(authMiddleWare('getUsers','read'), (req: IRequest, res: Response) => {
