@@ -72,8 +72,8 @@ class UserController {
     delete = (req: Request, res: Response) => {
         try {
             console.log(" :::::::::: Inside Delete Trainee :::::::: ");
-            const data = req.body;
-            this.userRepository.delete(data.id).then(user => {
+            const { id } = req.params;
+            this.userRepository.delete({_id:id}).then(user => {
                 console.log(user);
                 return SystemResponse.success(res, user, "user deleted successfully")
             })
