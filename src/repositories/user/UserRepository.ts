@@ -9,11 +9,14 @@ class UserRepository {
     private userModel: mongoose.Model<IUserModel>
 
     constructor() {
-        this.userModel = userModel;userModel
+        this.userModel = userModel;
+    }
+    getObjectId() {
+        return String(mongoose.Types.ObjectId());
     }
 
     create = (data: IUserCreate) => {
-        console.log('data',data)
+        console.log('data', data)
         return this.userModel.create(data);
     }
 
@@ -24,15 +27,15 @@ class UserRepository {
     findOne = (data) => {
         return this.userModel.findById(data);
     }
-        
+
     update = (id, data) => {
         return this.userModel.update(id, data);
     }
-        
+
     list = () => {
         return this.userModel.find();
     }
-        
+
     delete = (id) => {
         return this.userModel.findByIdAndDelete(id);
     }

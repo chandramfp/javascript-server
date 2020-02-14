@@ -4,5 +4,5 @@ import userRouter from './controllers/user/routes'
 
 const mainRouter = Router();
 mainRouter.use('/', traineeRouter);
-mainRouter.use('/', userRouter);
+mainRouter.use('/user', userRouter);
 export default mainRouter;
