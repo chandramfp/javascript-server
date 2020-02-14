@@ -14,16 +14,18 @@ userRouter.route('/')
 .get(authmiddleware('getUsers','read'),validationHandler(validation.get),Controller.get)
 .post(authmiddleware('getUsers','read'),Controller.create)
 .put(authmiddleware('getUsers','read'),validationHandler(validation.update),Controller.update)
-.delete(authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete);
+// .delete(authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete);
 // .get(Controller.get)
-//  .post(Controller.create)
-//  .put(Controller.update)
-//  .delete(Controller.delete);
+// .post(Controller.create)
+// .put(Controller.update)
+// .delete(Controller.delete);
 userRouter.delete('/:id',authmiddleware('getUsers','read'),validationHandler(validation.delete),Controller.delete)
 
 userRouter.route('/me')
 .get(authMiddleWare('getUsers','read'), (req: IRequest, res: Response) => {
     res.send(req.user);
- });
+})
+
+userRouter.post('/login',Controller.login)
 
 export default userRouter;

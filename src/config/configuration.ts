@@ -7,6 +7,7 @@ const configuration: IConfig = {
     port: process.env.PORT,
     env: process.env.NODE_ENV,
     key: process.env.key,
-    mongoURL: process.env.MONGO_URL
+    mongoURL: process.env.MONGO_URL,
+    password: process.env.PASSWORD
 };
 export default configuration;

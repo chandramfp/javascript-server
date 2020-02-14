@@ -13,7 +13,8 @@ class UserSchema extends VersionableSchema {
             dob: Date,
             mobile: Number,
             hobbies: [String],
-            role: String
+            role: String,
+            password: String
         }
         super(UserSchema, option);
     }
