@@ -18,7 +18,7 @@ export default (moduleName: any, permissionType: any) => (req: IRequest, res: Re
         const { key } = configuration;
 
         const decodedUser = jwt.verify(token, key);
-        console.log(decodedUser)
+        console.log(decodedUser);
         if (!decodedUser) {
             return next({
                 staus: 401,
@@ -33,11 +33,11 @@ export default (moduleName: any, permissionType: any) => (req: IRequest, res: Re
             if (!user) {
                 next({
                     status: 401,
-                    error: "Unauthorized Access",
-                    message: "User does not Exist in the System",
-                })
+                    error: 'Unauthorized Access',
+                    message: 'User does not Exist in the System',
+                });
             }
-            req.user = user
+            req.user = user;
         }).then(() => {
             const role: string = decodedUser.role;
 
@@ -51,7 +51,7 @@ export default (moduleName: any, permissionType: any) => (req: IRequest, res: Re
             }
             next();
 
-        })
+        });
 
     }
     catch (error) {

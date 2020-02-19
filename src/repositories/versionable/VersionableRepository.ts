@@ -1,9 +1,10 @@
 
 import * as mongoose from 'mongoose';
 import { DocumentQuery } from 'mongoose';
+import { userModel } from '../user/UserModel';
 
 
-class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>>{
+class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
 
     static generateObjectId() {
         return String(mongoose.Types.ObjectId());
@@ -15,77 +16,67 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
     }
 
     count() {
-        return this.modelType.countDocuments();
+        return this.modelType.find({deletedAt: undefined}).count();
     }
 
     findOne(query) {
         return this.modelType.findOne(query);
     }
 
-    public create(options): Promise<D> {
+    public create(options, userId): Promise<D> {
         const id = VersionableRepository.generateObjectId();
 
         return this.modelType.create({
             ...options,
             _id: id,
             originalId: id,
-            createdBy: id
-        })
+            createdBy: userId._id
+        });
     }
 
-    
+    public async list(data,skip, limit, sortData) {
 
-    public list() {
-        return this.modelType.find({deletedAt: undefined});
+        const l = parseInt(limit);
+        const s = parseInt(skip);
+
+        return this.modelType.find(data).skip(s).limit(l).sort(sortData);
     }
 
 
-    public update(id, data) {
+    public update(id, data, userId) {
 
         this.modelType.findById(id).then(user => {
-            //console.log('user',user)
             const updatedData = Object.assign(user, data);
-            this.updateAndCreate(updatedData);
+
+            this.updateAndCreate(updatedData, userId);
         }).catch(error => {
-            throw error
+            throw error;
         });
         const deleteddata = {
-            deletedBy: id,
+            deletedBy: userId._id,
             deletedAt: new Date()
-        }
+        };
         return this.modelType.update(id, deleteddata);
     }
 
-    public updateAndCreate(options) {
-        console.log(options);
+    public updateAndCreate(options, userId) {
         const id = VersionableRepository.generateObjectId();
         return this.modelType.create({
-            // name: options.name,
-            // hobbies: options.hobbies,
-            // email: options.email,
-            // address: options.address,
-            // role: options.role,
             originalId: options.originalId,
             ...options.toObject(),
             _id: id,
-            createdBy: id,
+            createdBy: userId._id,
             createdAt: new Date(),
             updatedAt: new Date(),
-            updatedBy: id,
-            
+            updatedBy: userId._id,
         });
     }
 
 
-    public async delete(id: string) {
-        
-        return await this.modelType.update(id,{deletedAt: new Date(),deletedBy: id});
+    public async delete(id, userId) {
+
+        return await this.modelType.update(id, { deletedAt: new Date(), deletedBy: userId._id});
     }
-
-
-
-
-
 
 }
 export default VersionableRepository;

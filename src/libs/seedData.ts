@@ -21,7 +21,8 @@ export default () => {
         userRepository.count().then((count) => {
             console.log('Number of User', count);
             if (!count) {
-                return userRepository.create(user)
+                const id = 'Created by Seed';
+                return userRepository.create(user, { _id: id})
                     .then((res) => {
                         console.log('User seeded Successfully', res);
                     });
@@ -31,5 +32,4 @@ export default () => {
         .catch((err) => console.error(err));
 
     });
-    
-}
+};

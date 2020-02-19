@@ -1,24 +1,49 @@
 const validation = {
     create: {
-        id: {
+        address: {
+            required: true,
+            in: ['body'],
+            string: true,
+            errorMessage: 'Address is required',
+        },
+        email: {
+            required: true,
+            string: true,
+            regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((successive.tech))$/,
+            in: ['body'],
+            errorMessage: 'Email is required',
+        },
+        mobileNumber: {
+            required: true,
+            number: true,
+            in: ['body'],
+            errorMessage: 'Number is required',
+        },
+        hobbies: {
+            in: ['body'],
+            required: true,
+            isObject: true,
+            errorMessage: 'Hobbies is required'
+        },
+        role: {
+            in: ['body'],
+            required: true,
+            isObject: true,
+            errorMessage: 'Role is required'
+        },
+        password: {
             required: true,
             string: true,
             in: ['body'],
-            custom: function (value) {
-                console.log('Value', value); throw {
-                    error: "Id is required",
-                    message: "Id is required",
-                    timestamp: new Date(),
-                    status: 500,
-                }
-            }
+            errorMessage: 'Password is required'
+
         },
         name: {
             required: true,
             regex: /^[a-zA-Z ]{2,30}$/,
             in: ['body'],
             errorMessage: 'Name is required',
-            
+
         }
     },
     delete: {
@@ -29,7 +54,7 @@ const validation = {
             custom: function (dataToUpdate) {
                 console.log('dataToUpdate', dataToUpdate); throw {
                     error: "Id is required",
-                    
+
                     timestamp: new Date(),
                     status: 500,
                 }
@@ -44,7 +69,7 @@ const validation = {
             number: true,
             in: ['query'],
             errorMessage: 'Skip is invalid',
-            
+
         },
         limit: {
             required: false,
@@ -52,7 +77,7 @@ const validation = {
             number: true,
             in: ['query'],
             errorMessage: 'Limit is invalid',
-            
+
         }
     },
     update: {
@@ -60,7 +85,7 @@ const validation = {
             required: true,
             string: true,
             in: ['body'],
-            
+
 
         },
         dataToUpdate: {
