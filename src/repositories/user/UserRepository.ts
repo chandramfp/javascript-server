@@ -24,10 +24,12 @@ class UserRepository extends VersionableRepository< IUserModel, mongoose.Model<I
         return super.count();
     }
 
-       update = (id, data, userId) => {
-        return super.update(id, data, userId);
+    update = (id, data, userId) => {
+        return super.update(userId, id, data);
     }
 
+
+   
 
     list = (data, skip, limit, sortData) => {
         return super.list(data, skip, limit, sortData);

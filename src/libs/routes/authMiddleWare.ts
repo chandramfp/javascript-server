@@ -14,11 +14,9 @@ export default (moduleName: any, permissionType: any) => (req: IRequest, res: Re
 
         const token = req.headers.authorization;
 
-        console.log(token);
         const { key } = configuration;
-
         const decodedUser = jwt.verify(token, key);
-        console.log(decodedUser);
+
         if (!decodedUser) {
             return next({
                 staus: 401,

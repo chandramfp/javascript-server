@@ -16,7 +16,7 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
     }
 
     count() {
-        return this.modelType.find({deletedAt: undefined}).count();
+        return this.modelType.find({ deletedAt: undefined }).count();
     }
 
     findOne(query) {
@@ -34,49 +34,36 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
         });
     }
 
-    public async list(data,skip, limit, sortData) {
+    public async list(data, skip, limit, sortData) {
 
-        const l = parseInt(limit);
         const s = parseInt(skip);
+        const l = parseInt(limit);
 
-        return this.modelType.find(data).skip(s).limit(l).sort(sortData);
+        return this.modelType.find(data).limit(l).skip(s).sort(sortData);
     }
 
 
-    public update(id, data, userId) {
-
-        this.modelType.findById(id).then(user => {
-            const updatedData = Object.assign(user, data);
-
-            this.updateAndCreate(updatedData, userId);
-        }).catch(error => {
-            throw error;
-        });
-        const deleteddata = {
-            deletedBy: userId._id,
-            deletedAt: new Date()
-        };
-        return this.modelType.update(id, deleteddata);
-    }
-
-    public updateAndCreate(options, userId) {
-        const id = VersionableRepository.generateObjectId();
-        return this.modelType.create({
-            originalId: options.originalId,
-            ...options.toObject(),
-            _id: id,
-            createdBy: userId._id,
-            createdAt: new Date(),
+    public async update(userID, condition, data) {
+        const user = await this.modelType.findOne(condition);
+        Object.assign(user, data);
+        const newid = VersionableRepository.generateObjectId();
+        const newObj = {
+            ...user.toObject(),
+            _id: newid,
+            createdBy: userID._id,
             updatedAt: new Date(),
-            updatedBy: userId._id,
-        });
+            updatedBy: userID._id,
+        };
+        this.modelType.create(newObj);
+        return await this.modelType.update(condition, { deletedBy: userID._id, deletedAt: new Date() });
     }
-
 
     public async delete(id, userId) {
 
-        return await this.modelType.update(id, { deletedAt: new Date(), deletedBy: userId._id});
+        return await this.modelType.update(id, { deletedAt: new Date(), deletedBy: userId._id });
     }
+
+   
 
 }
 export default VersionableRepository;
