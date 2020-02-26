@@ -1,10 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+
+import config from '../../config/configuration';
+
 import UserRepository from '../../repositories/user/UserRepository';
 import SystemResponse from '../../libs/systemResponse';
 import IRequest from '../../libs/routes/IRequest';
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-import config from '../../config/configuration';
+import { isNull } from 'util';
+
 
 class TraineeController {
     static instance: TraineeController;
@@ -23,23 +27,32 @@ class TraineeController {
 
 
 
-
-
-
-    create = (req: IRequest, res: Response) => {
+    create = async (req: IRequest, res: Response, next: NextFunction) => {
         try {
             console.log(' :::::::::: Inside Create trainee :::::::: ');
 
             const { password } = req.body;
+            const { email } = req.body;
 
+            const emailInLower = email.toLowerCase(); // for database storage in all lowercase email
+
+
+            const verifyEmail = await this.userRepository.findOne({ email: emailInLower });
+
+            if (verifyEmail) {
+                return next({
+                    error: 'Email already exist',
+                    status: 400
+                });
+            }
             bcrypt.hash(password, 10, (err, hash) => {
 
                 const password = hash;
 
-                const { email, name, role, address, hobbies, dob, mobileNumber } = req.body;
+                const { name, role, address, hobbies, dob, mobileNumber } = req.body;
 
                 this.userRepository
-                    .create({ email, name, address, role, hobbies, mobileNumber, password }, req.user)
+                    .create({ email: emailInLower, name, address, role, hobbies, mobileNumber, password }, req.user)
                     .then(user => {
                         return SystemResponse.success(res, user, 'Trainee added successfully');
                     })
@@ -50,14 +63,17 @@ class TraineeController {
             });
 
         }
-        catch (err) { }
+        catch (err) {
+            throw err;
+        }
     };
 
 
-    get = async (req: Request, res: Response) => {
+    get = async (req: Request, res: Response, next: NextFunction) => {
         try {
             console.log(' :::::::::: Inside List Trainee :::::::: ');
-            const { limit, skip } = req.query;
+            const { skip, limit, search } = req.query;
+            console.log(skip, limit)
             let sortData;
 
             if (req.query.sortData === 'email')
@@ -65,40 +81,69 @@ class TraineeController {
             else if (req.query.sortData === 'name')
                 sortData = { name: 1 };
             else
-                sortData = { updatedAt: 1 };
-
-            const user = await this.userRepository.list({ deletedAt: undefined }, limit, skip, sortData);
-            const count = await this.userRepository.count();
+                sortData = { createdAt: -1 };
 
 
+           console.log(search)
 
-            return SystemResponse.success(res, { Count: count, ...user }, 'Trainee List');
+            if (search) {
+                const searching = search.split(':');
 
-        } catch (err) { }
+                const user = await this.userRepository.list({ [searching[0]]: [searching[1]], deletedAt: undefined }, limit, skip, sortData);
+                const count = await this.userRepository.count();
+                if (Object.entries(user).length === 0) {
+                    return next({
+                        error: 'User not found',
+                        status: 500
+                    });
+                }
+
+                return SystemResponse.success(res, { Count: count, ...user }, 'Search List');
+
+
+            } else {
+                const user = await this.userRepository.list({ deletedAt: undefined }, skip, limit, sortData);
+                const count = await this.userRepository.count();
+
+
+
+                return SystemResponse.success(res, { Count: count, ...user }, 'Trainee List');
+            }
+
+        } catch (err) {
+            throw err;
+        }
     };
+
     update = async (req: IRequest, res: Response) => {
         try {
             console.log(' :::::::::: Inside Update Trainee :::::::: ');
             const { id, dataToUpdate } = req.body;
-            const userToUpdate = await this.userRepository.update({ _id: id }, dataToUpdate, req.user);
+            const userToUpdate = await this.userRepository.update({ originalId: id, deletedAt: undefined }, dataToUpdate, req.user);
 
-            const user = await this.userRepository.findOne({ _id: id });
-
+            const user = await this.userRepository.findOne({ originalId: id ,deletedAt: undefined });
+            console.log(user)
             return SystemResponse.success(res, user, 'Trainee Updated successfully');
 
         }
-        catch (err) { }
+        catch (err) {
+            throw err;
+        }
 
     };
+    
     delete = async (req: IRequest, res: Response) => {
         try {
             console.log(' :::::::::: Inside Delete Trainee :::::::: ');
             const { id } = req.params;
             const user = await this.userRepository.delete({ _id: id }, req.user);
+            console.log(user)
 
             return SystemResponse.success(res, user, 'Trainee deleted successfully');
 
-        } catch (err) { }
+        } catch (err) {
+            throw err;
+        }
 
     };
 }

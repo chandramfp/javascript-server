@@ -40,7 +40,7 @@ const validateData = (validationRules, dataToValidate, validateKey) => {
 
             errorchecker(validationRules, validateKey);
         }
-        console.log(dataToValidate)
+        // console.log(dataToValidate)
         if (
             Object.keys(validationRules).includes('number') &&
             (isNaN(parseInt(dataToValidate[validateKey])))
@@ -86,8 +86,11 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
             } else if (validationRules.in.includes('query') && Object.keys(dataFromQuery).includes(validateKey)) {
 
                 validateData(validationRules, dataFromQuery, validateKey)
-            } else {
-                errorchecker(validationRules, validateKey);
+            } else if (validationRules !== 'skip' && validationRules !== 'limit' && validationRules !== 'sortData') {
+                req.query = {
+                    skip: '0',
+                    limit: '10'
+                };
             }
 
 
@@ -99,9 +102,9 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
 
     });
     if (errorMsg.length > 0) {
-        res.send(errorMsg)
+        res.send(errorMsg);
     } else {
         next();
     }
 
-}
+};

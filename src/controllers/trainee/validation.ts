@@ -28,7 +28,6 @@ const validation = {
         role: {
             in: ['body'],
             required: true,
-            isObject: true,
             errorMessage: 'Role is required'
         },
         password: {
@@ -53,11 +52,11 @@ const validation = {
             in: ['params'],
             custom: function (dataToUpdate) {
                 console.log('dataToUpdate', dataToUpdate); throw {
-                    error: "Id is required",
+                    error: 'Id is required',
 
                     timestamp: new Date(),
                     status: 500,
-                }
+                };
 
             },
         }
@@ -94,10 +93,10 @@ const validation = {
             isObject: true,
             custom: function (dataToUpdate) {
                 console.log('dataToUpdate', dataToUpdate); throw {
-                    message: "Id is required",
+                    message: 'Id is required',
                     timestamp: new Date(),
                     status: 500,
-                }
+                };
 
             },
         }
