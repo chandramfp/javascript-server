@@ -11,7 +11,7 @@ export default () => {
             name: 'head-trainee',
             address: 'Noida',
             // dob: new Date('27-12-1993').toDateString(),
-            email: 'vinay@successive.tech',
+            email: 'chandrashekhar.kumar@successive.tech',
             mobileNumber: 9876543210,
             hobbies: ['Reading'],
             role: 'head-trainer',

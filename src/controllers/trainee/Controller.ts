@@ -83,13 +83,13 @@ class TraineeController {
             else
                 sortData = { createdAt: -1 };
 
-
+            console.log(sortData)
            console.log(search)
 
             if (search) {
                 const searching = search.split(':');
 
-                const user = await this.userRepository.list({ [searching[0]]: [searching[1]], deletedAt: undefined }, limit, skip, sortData);
+                const user = await this.userRepository.list({ [searching[0]]: [searching[1]], deletedAt: undefined }, skip, limit, sortData);
                 const count = await this.userRepository.count();
                 if (Object.entries(user).length === 0) {
                     return next({

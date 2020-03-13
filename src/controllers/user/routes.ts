@@ -20,10 +20,10 @@ userRouter.route('/');
  *       properties:
  *           email:
  *               type: string
- *               example: chandrashekhar.kumar@successive.tech
+ *               example: 'chandrashekhar.kumar@successive.tech'
  *           password:
  *               type: string
- *               example: #Include
+ *               example: '#Include'
  *    Token:
  *       type: object
  *       properties:
