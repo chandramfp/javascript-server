@@ -20,22 +20,22 @@ traineeRouter.route('/')
  *       properties:
  *           email:
  *               type: string
- *               example: chandrashekhar.kumar@successive.tech
+ *               example: 'chandrashekhar.kumar@successive.tech'
  *           name:
  *               type: string
- *               example: shekhar gupta
+ *               example: 'shekhar gupta'
  *           password:
  *               type: string
- *               example: #Include
+ *               example: '#Include'
  *           mob:
  *               type: number
  *               example: "9572654116"
  *           address:
  *               type: string
- *               example: Noida
+ *               example: 'Noida'
  *           role:
  *               type: string
- *               example: trainee
+ *               example: 'trainee'
  *           hobbies:
  *               type: array
  *               example: ["cricket"]
@@ -134,7 +134,16 @@ traineeRouter.route('/')
  *                     data:
  *                         type: object
  *                         allOf[]:
- *                             - $ref: '#/definitions/TraineeResponse'
+ *                         - $ref: '#/definitions/TraineeResponse'
+ *                         properties:
+ *                             _id:
+ *                                  example: '5c6c47447740654f0915fac7'
+ *                             name:
+ *                                  example: 'Chandrashekhar Kumar'
+ *                             role:
+ *                                  example: 'head-trainer'
+ *                             email:
+ *                                  example: 'chandrashekhar.kumar@successive.tech'
  *           403:
  *              description: unauthorised access
  *              schema:
@@ -184,7 +193,7 @@ traineeRouter.route('/')
  *                           email:
  *                                example: 'chandrashekhar.kumar@successive.tech'
  *                           role:
- *                                example: 'Test Trainee'
+ *                                example: 'Trainee'
  *                           
  *       403:
  *         description: unauthorised access
@@ -212,14 +221,14 @@ traineeRouter.route('/')
  *             required: true
  *             type: object
  *             schema:
- *               allOf[]:
- *                   properties:
- *                       id:
- *                          example: 5e4e6e93c095d84d34045a30
- *             dataToUpdate:
- *               type: object
- *               allOf[]:
- *               - $ref: '#/definitions/TraineePost'
+ *              allOf[]:
+ *              properties:
+ *                  id:
+ *                     example: 5e4e6e93c095d84d34045a30
+ *                  dataToUpdate:
+ *                     type: object
+ *                     allOf[]:
+ *                     - $ref: '#/definitions/TraineePost'
  *       responses:
  *           200:
  *               description: trainee updated successfully
